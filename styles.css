@@ -1,8 +1,13 @@
-*:before, *:after, * {
+*::before, *::after, * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9);
+}
 body {
     display: flex;
     flex-direction: column;
@@ -11,17 +16,22 @@ body {
     height: 100vh;
     width: 100vw;
     position: relative;
+    margin: 0;
 }
 
 .gameBoard {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, auto);
 }
 
 .cell{
     width: 100px;
     height: 100px;
     border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .cell:first-child{
@@ -64,7 +74,49 @@ body {
 }
 
 .restart:hover{
+    cursor: pointer;
     transition: .3s ease;
     color:rgb(78, 75, 75);
     background-color: rgb(170, 167, 167);
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+
+
+.cell.X_TURN::before, 
+.cell.X_TURN::after {
+    content: '';
+    width: calc(var(--mark-size) * .15);
+    height: calc(var(--mark-size));
+    background-color: black;
+    border-radius: 10px;
+    position: absolute;
+}
+
+.cell.X_TURN::before {
+    rotate: 45deg;
+}
+
+.cell.X_TURN::after{
+    rotate: -45deg;
+}
+
+
+.cell.O_TURN::before, 
+.cell.O_TURN::after {
+    content: '';
+    width: calc(var(--mark-size));
+    height: calc(var(--mark-size));
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.cell.O_TURN::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
 }
