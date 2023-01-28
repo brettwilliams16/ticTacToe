@@ -1,8 +1,10 @@
 const cells = document.querySelectorAll(".cell");
 const restartBtn = document.querySelector('.restart');
+const winner = document.querySelector(".winner");
 
 const gameBoardInit = function(){
     const gameBoard = document.querySelector(".gameBoard");
+
     const X_TURN = "X_TURN";
     const O_TURN = "O_TURN";
     let currentTurn = X_TURN;
@@ -14,11 +16,19 @@ const gameBoardInit = function(){
                 if(currentTurn === X_TURN){
                     cell.classList.add("X_TURN");
                     console.log(checkForWin(currentTurn));
+                    if(checkForWin(currentTurn)){
+                       displayWinner(currentTurn); 
+                        //  endGame();
+                    }
                     currentTurn = O_TURN;
                 }
                 else{
                     cell.classList.add("O_TURN");
                     console.log(checkForWin(currentTurn));
+                    if(checkForWin(currentTurn)){
+                        displayWinner(currentTurn);
+                        // endGame();
+                    }
                     currentTurn = X_TURN;
                 }
             }
@@ -26,12 +36,16 @@ const gameBoardInit = function(){
     });
 }
 
+
+
 const restartGame = function() {
         cells.forEach(cell => {
             cell.classList.remove("X_TURN");
             cell.classList.remove("O_TURN");
         });
 
+        winner.textContent = '';
+        gameBoardInit();
 };
 
 const checkForWin = function(currentTurn){
@@ -53,7 +67,20 @@ const checkForWin = function(currentTurn){
     })
 }
 
-console.log(winningCombonations);
+const displayWinner = function(currentWinner) {
+    if(currentWinner === "X_TURN"){
+        winner.textContent = `X's have won!`;
+    }
+    else{
+        winner.textContent = `O's have won!`;
+    }
+}
+
+// const endGame = function() {
+//     cells.forEach(cell => {
+//         cell.removeEventListener('click', )
+//     });
+// }
 
 gameBoardInit();
 restartBtn.addEventListener('click', restartGame);

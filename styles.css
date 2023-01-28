@@ -120,3 +120,12 @@ body {
     height: calc(var(--mark-size) * .7);
     background-color: white;
 }
+
+.winner {
+    position: relative;
+    top: -50%;
+    font-size: 5em;
+    color: white;
+    background-color: lightgrey;
+    
+}
