@@ -2,40 +2,33 @@ const cells = document.querySelectorAll(".cell");
 const restartBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
 
+let x_turn = false;
+
 const gameBoardInit = function(){
     const gameBoard = document.querySelector(".gameBoard");
 
-    const X_TURN = "X_TURN";
-    const O_TURN = "O_TURN";
-    let currentTurn = X_TURN;
-
     cells.forEach(cell => {
-        cell.addEventListener('click', (e) => {
-            let cell = e.target;
-            if(!(cell.classList.contains("X_TURN") || cell.classList.contains("O_TURN"))){
-                if(currentTurn === X_TURN){
-                    cell.classList.add("X_TURN");
-                    console.log(checkForWin(currentTurn));
-                    if(checkForWin(currentTurn)){
-                       displayWinner(currentTurn); 
-                        //  endGame();
-                    }
-                    currentTurn = O_TURN;
-                }
-                else{
-                    cell.classList.add("O_TURN");
-                    console.log(checkForWin(currentTurn));
-                    if(checkForWin(currentTurn)){
-                        displayWinner(currentTurn);
-                        // endGame();
-                    }
-                    currentTurn = X_TURN;
-                }
-            }
-        });
-    });
+        cell.addEventListener('click', markListener, {once: true});
+    }) 
 }
 
+const markListener = function(e) {
+    const X_TURN = "X_TURN";
+    const O_TURN = "O_TURN";
+
+    cell = e.target;
+    currentTurn = x_turn ? O_TURN : X_TURN;
+    placeMarker(cell, currentTurn);
+    if(checkForWin(currentTurn)){
+        displayWinner(currentTurn);
+        endGame();
+    }
+    x_turn = !x_turn;
+}
+
+const placeMarker = function(cell, currentClass){
+    cell.classList.add(currentClass);
+}
 
 
 const restartGame = function() {
@@ -76,11 +69,11 @@ const displayWinner = function(currentWinner) {
     }
 }
 
-// const endGame = function() {
-//     cells.forEach(cell => {
-//         cell.removeEventListener('click', )
-//     });
-// }
+const endGame = function() {
+    cells.forEach(cell => {
+        cell.removeEventListener('click', markListener);
+    });
+}
 
 gameBoardInit();
 restartBtn.addEventListener('click', restartGame);

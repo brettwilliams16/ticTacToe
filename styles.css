@@ -129,3 +129,7 @@ body {
     background-color: lightgrey;
     
 }
+
+.cell.O_TURN, .cell.X_TURN {
+    cursor: not-allowed;
+}
