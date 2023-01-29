@@ -87,7 +87,9 @@ body {
 
 
 .cell.X_TURN::before, 
-.cell.X_TURN::after {
+.cell.X_TURN::after,
+.gameBoard.X_TURN .cell:not(.X_TURN):not(.O_TURN):hover::after,
+.gameBoard.X_TURN .cell:not(.X_TURN):not(.O_TURN):hover::before {
     content: '';
     width: calc(var(--mark-size) * .15);
     height: calc(var(--mark-size));
@@ -96,17 +98,27 @@ body {
     position: absolute;
 }
 
-.cell.X_TURN::before {
+.gameBoard.X_TURN .cell:not(.X_TURN):not(.O_TURN):hover::after,
+.gameBoard.X_TURN .cell:not(.X_TURN):not(.O_TURN):hover::before {
+    background-color: grey;
+}
+
+
+.cell.X_TURN::before,
+.gameBoard.X_TURN .cell:not(.O_TURN):not(.X_TURN)::before {
     rotate: 45deg;
 }
 
-.cell.X_TURN::after{
+.cell.X_TURN::after,
+.gameBoard.X_TURN .cell:not(.X_TURN):not(.O_TURN)::after{
     rotate: -45deg;
 }
 
 
 .cell.O_TURN::before, 
-.cell.O_TURN::after {
+.cell.O_TURN::after,
+.gameBoard.O_TURN .cell:not(.X_TURN):not(.O_TURN):hover::after,
+.gameBoard.O_TURN .cell:not(.X_TURN):not(.O_TURN):hover::before {
     content: '';
     width: calc(var(--mark-size));
     height: calc(var(--mark-size));
@@ -115,7 +127,13 @@ body {
     position: absolute;
 }
 
-.cell.O_TURN::after {
+.gameBoard.O_TURN .cell:not(.X_TURN):not(.O_TURN):hover::after,
+.gameBoard.O_TURN .cell:not(.X_TURN):not(.O_TURN):hover::before {
+    background-color: grey;
+}
+
+.cell.O_TURN::after,
+.gameBoard.O_TURN .cell:not(.O_TURN):not(.X_TURN):hover::after {
     width: calc(var(--mark-size) * .7);
     height: calc(var(--mark-size) * .7);
     background-color: white;
@@ -141,4 +159,12 @@ fieldset {
     justify-content: space-between;
     padding: 10px;
     width: 250px;
+}
+
+.cell.X_TURN::before:hover {
+    rotate: 45deg;
+}
+
+.cell.X_TURN::after:hover{
+    rotate: -45deg;
 }

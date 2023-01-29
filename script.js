@@ -1,14 +1,16 @@
 const cells = document.querySelectorAll(".cell");
 const restartBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
+const gameBoard = document.querySelector(".gameBoard");
 let x_turn = false;
 
-const gameBoardInit = function(){
-    const gameBoard = document.querySelector(".gameBoard");
-
+const gameBoardInit = function(){ // initalizes the game board
+    let classToAdd = x_turn ? "O_TURN" : "X_TURN";
+    gameBoard.classList.add(classToAdd);
     cells.forEach(cell => {
         cell.addEventListener('click', markListener, {once: true});
     }) 
+
 }
 
 const markListener = function(e) {
@@ -30,7 +32,17 @@ const markListener = function(e) {
 }
 
 const placeMarker = function(cell, currentClass){
+    let newClass;
     cell.classList.add(currentClass); // adds the current turns mark to the cell chosen
+    gameBoard.classList.remove(currentClass);
+    if(currentClass === "X_TURN"){
+        newClass = "O_TURN";
+    }
+    else{
+        newClass = "X_TURN";
+    }
+    gameBoard.classList.add(newClass);
+    
 }
 
 
