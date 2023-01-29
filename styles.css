@@ -133,3 +133,12 @@ body {
 .cell.O_TURN, .cell.X_TURN {
     cursor: not-allowed;
 }
+
+fieldset {
+    position: absolute;
+    top: 20%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    width: 250px;
+}

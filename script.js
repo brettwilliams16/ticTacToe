@@ -1,7 +1,6 @@
 const cells = document.querySelectorAll(".cell");
 const restartBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
-
 let x_turn = false;
 
 const gameBoardInit = function(){
