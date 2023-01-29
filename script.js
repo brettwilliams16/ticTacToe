@@ -16,17 +16,21 @@ const markListener = function(e) {
     const O_TURN = "O_TURN";
 
     cell = e.target;
-    currentTurn = x_turn ? O_TURN : X_TURN;
+    currentTurn = x_turn ? O_TURN : X_TURN; // checks to see whos turn it is
     placeMarker(cell, currentTurn);
-    if(checkForWin(currentTurn)){
+    if(checkForTie()){ // checks for tie
+        displayTie();
+        endGame();
+    }
+    if(checkForWin(currentTurn)){ // checks for win
         displayWinner(currentTurn);
         endGame();
     }
-    x_turn = !x_turn;
+    x_turn = !x_turn; // switches turn
 }
 
 const placeMarker = function(cell, currentClass){
-    cell.classList.add(currentClass);
+    cell.classList.add(currentClass); // adds the current turns mark to the cell chosen
 }
 
 
@@ -36,12 +40,12 @@ const restartGame = function() {
             cell.classList.remove("O_TURN");
         });
 
-        winner.textContent = '';
+        winner.textContent = ''; // function clears the entire board
         gameBoardInit();
 };
 
 const checkForWin = function(currentTurn){
-    const winningCombonations = [
+    const winningCombonations = [ // all possible winning combinations
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -54,14 +58,14 @@ const checkForWin = function(currentTurn){
 
     return winningCombonations.some(combo => {
         return combo.every(index => {
-            return cells[index].classList.contains(currentTurn);
+            return cells[index].classList.contains(currentTurn); // checks to see if any combination has    been matched
         })
     })
 }
 
-const displayWinner = function(currentWinner) {
+const displayWinner = function(currentWinner) { // if won, adds either "X's" or "O's" have won
     if(currentWinner === "X_TURN"){
-        winner.textContent = `X's have won!`;
+        winner.textContent = `X's have won!`; 
     }
     else{
         winner.textContent = `O's have won!`;
@@ -70,8 +74,19 @@ const displayWinner = function(currentWinner) {
 
 const endGame = function() {
     cells.forEach(cell => {
-        cell.removeEventListener('click', markListener);
+        cell.removeEventListener('click', markListener); // removes the ability to add marks to cells
     });
+}
+
+const checkForTie = function() {
+    const myCells = [...cells]; // converts cells into an array
+    return myCells.every(cell => {
+        return cell.classList.contains("X_TURN") || cell.classList.contains("O_TURN");
+    })
+}
+
+const displayTie = function() {
+    winner.textContent = `It was a tie!`; // displays tie
 }
 
 gameBoardInit();
