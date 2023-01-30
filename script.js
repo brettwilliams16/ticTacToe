@@ -1,6 +1,6 @@
 // const cells = document.querySelectorAll(".cell");
 // const startBtn = document.querySelector('.restart');
-const winner = document.querySelector(".winner");
+// const winner = document.querySelector(".winner");
 const gameBoard = document.querySelector(".gameBoard");
 let x_turn = false;
 
@@ -99,6 +99,8 @@ const placeMarkerCPU = function(cell, currentClass){
 }
 
 const restartGame = function() {
+        const winner = document.querySelector(".winner");
+
         const cells = document.querySelectorAll(".cell");
 
         const checkedBtn = document.querySelector('input[name="cpuOrHuman"]:checked').value;
@@ -139,6 +141,8 @@ const checkForWin = function(currentTurn){
 }
 
 const displayWinner = function(currentWinner) { // if won, adds either "X's" or "O's" have won
+    const winner = document.querySelector(".winner");
+
     if(currentWinner === "X_TURN"){
         winner.textContent = `X's have won!`; 
     }
@@ -164,6 +168,8 @@ const checkForTie = function() {
 }
 
 const displayTie = function() {
+    const winner = document.querySelector(".winner");
+
     winner.textContent = `It was a tie!`; // displays tie
 }
 
@@ -171,6 +177,8 @@ const startGame = function(){
     const startBtn = document.querySelector('.restart');
     startBtn.addEventListener('click', restartGame);
 }
+
+startGame();
 
 
 

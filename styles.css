@@ -62,8 +62,6 @@ body {
 } 
 
 .restart {
-    position: absolute;
-    top: 70%;
     border-radius: 10px;
     border: none;
     font-size: 2rem;
@@ -71,6 +69,7 @@ body {
     background-color: rgb(78, 75, 75);
     color: white;
     box-shadow: 2px 5px 1px 1px lightgrey;
+    margin-top: 10px;
 }
 
 .restart:hover{
@@ -141,7 +140,6 @@ body {
 
 .winner {
     position: relative;
-    top: -50%;
     font-size: 5em;
     color: white;
     background-color: lightgrey;
@@ -153,8 +151,8 @@ body {
 }
 
 fieldset {
-    position: absolute;
-    top: 20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     padding: 10px;
