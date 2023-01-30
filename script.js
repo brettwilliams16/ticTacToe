@@ -1,10 +1,11 @@
-const cells = document.querySelectorAll(".cell");
+// const cells = document.querySelectorAll(".cell");
 const startBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
 const gameBoard = document.querySelector(".gameBoard");
 let x_turn = false;
 
 const gameBoardCPUInit = function() {
+    const cells = document.querySelectorAll(".cell");
     gameBoard.classList.add("X_TURN");
     cells.forEach(cell => {
         cell.addEventListener("click", cpuMarkListener, {once: true});
@@ -12,6 +13,8 @@ const gameBoardCPUInit = function() {
 }
 
 const gameBoardPlayerInit = function(){ // initalizes the game board
+    const cells = document.querySelectorAll(".cell");
+
     let classToAdd = x_turn ? "O_TURN" : "X_TURN";
     gameBoard.classList.add(classToAdd);
     cells.forEach(cell => {
@@ -20,6 +23,7 @@ const gameBoardPlayerInit = function(){ // initalizes the game board
 }
 
 const cpuMove = function(currentClass) {
+    const cells = document.querySelectorAll(".cell");
     let cell = Math.floor(Math.random() * 8);
     while(cells[cell].classList.contains("O_TURN") || cells[cell].classList.contains("X_TURN")){
         cell = Math.floor(Math.random() * 8);
@@ -32,6 +36,7 @@ const markListener = function(e) {
     const O_TURN = "O_TURN";
 
     cell = e.target;
+    console.log(cell)
     currentTurn = x_turn ? O_TURN : X_TURN; // checks to see whos turn it is
     placeMarker(cell, currentTurn);
     if(checkForTie()){ // checks for tie
@@ -50,6 +55,9 @@ const cpuMarkListener = function(e){
     const cpuClass = "O_TURN";
 
     cell = e.target;
+    if(cell.classList.contains("X_TURN") || cell.classList.contains("O_TURN")){
+        return;
+    }
     placeMarkerCPU(cell, playerClass);
     if(checkForWin(playerClass)){
         displayWinner(playerClass);
@@ -91,6 +99,8 @@ const placeMarkerCPU = function(cell, currentClass){
 }
 
 const restartGame = function() {
+        const cells = document.querySelectorAll(".cell");
+
         const checkedBtn = document.querySelector('input[name="cpuOrHuman"]:checked').value;
         cells.forEach(cell => {
             cell.classList.remove("X_TURN");
@@ -121,6 +131,7 @@ const checkForWin = function(currentTurn){
     ];
 
     return winningCombonations.some(combo => {
+        const cells = document.querySelectorAll(".cell");
         return combo.every(index => {
             return cells[index].classList.contains(currentTurn); // checks to see if any combination has    been matched
         })
@@ -137,12 +148,15 @@ const displayWinner = function(currentWinner) { // if won, adds either "X's" or 
 }
 
 const endGame = function() {
+    const cells = document.querySelectorAll(".cell");
     cells.forEach(cell => {
-        cell.removeEventListener('click', markListener); // removes the ability to add marks to cells
+        cell.removeEventListener('click', markListener);
+        cell.removeEventListener('click', cpuMarkListener); // removes the ability to add marks to cells
     });
 }
 
 const checkForTie = function() {
+    const cells = document.querySelectorAll(".cell");
     const myCells = [...cells]; // converts cells into an array
     return myCells.every(cell => {
         return cell.classList.contains("X_TURN") || cell.classList.contains("O_TURN");
