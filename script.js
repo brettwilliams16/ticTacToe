@@ -1,5 +1,5 @@
 // const cells = document.querySelectorAll(".cell");
-const startBtn = document.querySelector('.restart');
+// const startBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
 const gameBoard = document.querySelector(".gameBoard");
 let x_turn = false;
@@ -167,7 +167,11 @@ const displayTie = function() {
     winner.textContent = `It was a tie!`; // displays tie
 }
 
-startBtn.addEventListener('click', restartGame);
+const startGame = function(){
+    const startBtn = document.querySelector('.restart');
+    startBtn.addEventListener('click', restartGame);
+}
+
 
 
 
