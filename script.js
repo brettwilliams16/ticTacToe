@@ -1,16 +1,30 @@
 const cells = document.querySelectorAll(".cell");
-const restartBtn = document.querySelector('.restart');
+const startBtn = document.querySelector('.restart');
 const winner = document.querySelector(".winner");
 const gameBoard = document.querySelector(".gameBoard");
 let x_turn = false;
 
-const gameBoardInit = function(){ // initalizes the game board
+const gameBoardCPUInit = function() {
+    gameBoard.classList.add("X_TURN");
+    cells.forEach(cell => {
+        cell.addEventListener("click", cpuMarkListener, {once: true});
+    })
+}
+
+const gameBoardPlayerInit = function(){ // initalizes the game board
     let classToAdd = x_turn ? "O_TURN" : "X_TURN";
     gameBoard.classList.add(classToAdd);
     cells.forEach(cell => {
         cell.addEventListener('click', markListener, {once: true});
     }) 
+}
 
+const cpuMove = function(currentClass) {
+    let cell = Math.floor(Math.random() * 8);
+    while(cells[cell].classList.contains("O_TURN") || cells[cell].classList.contains("X_TURN")){
+        cell = Math.floor(Math.random() * 8);
+    }
+    cells[cell].classList.add(currentClass);
 }
 
 const markListener = function(e) {
@@ -31,6 +45,33 @@ const markListener = function(e) {
     x_turn = !x_turn; // switches turn
 }
 
+const cpuMarkListener = function(e){
+    const playerClass = "X_TURN";
+    const cpuClass = "O_TURN";
+
+    cell = e.target;
+    placeMarkerCPU(cell, playerClass);
+    if(checkForWin(playerClass)){
+        displayWinner(playerClass);
+        endGame();
+        return;
+    }
+    if(checkForTie()){
+        displayTie();
+        endGame();
+        return;
+    }
+    cpuMove(cpuClass);
+    if(checkForWin(cpuClass)){
+        displayWinner(cpuClass);
+        endGame();
+    }
+    if(checkForTie()){
+        displayTie();
+        endGame();
+    }
+}
+
 const placeMarker = function(cell, currentClass){
     let newClass;
     cell.classList.add(currentClass); // adds the current turns mark to the cell chosen
@@ -45,15 +86,26 @@ const placeMarker = function(cell, currentClass){
     
 }
 
+const placeMarkerCPU = function(cell, currentClass){
+    cell.classList.add(currentClass); // adds the current turns mark to the cell chosen    
+}
 
 const restartGame = function() {
+        const checkedBtn = document.querySelector('input[name="cpuOrHuman"]:checked').value;
         cells.forEach(cell => {
             cell.classList.remove("X_TURN");
             cell.classList.remove("O_TURN");
         });
-
+        gameBoard.classList.remove("O_TURN");
+        gameBoard.classList.remove("X_TURN");
         winner.textContent = ''; // function clears the entire board
-        gameBoardInit();
+        console.log(checkedBtn);
+        if(checkedBtn === "human"){
+            gameBoardPlayerInit();
+        }
+        else{
+            gameBoardCPUInit();
+        }
 };
 
 const checkForWin = function(currentTurn){
@@ -101,8 +153,7 @@ const displayTie = function() {
     winner.textContent = `It was a tie!`; // displays tie
 }
 
-gameBoardInit();
-restartBtn.addEventListener('click', restartGame);
+startBtn.addEventListener('click', restartGame);
 
 
 
